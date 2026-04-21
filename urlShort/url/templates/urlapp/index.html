@@ -1,0 +1,120 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    input[type="text"], input[type="url"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background: #0056b3;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .url-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .url-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f9fafc;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .short-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .short-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h1>🔗 URL Shortener</h1>
+
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.url }}
+    <button type="submit">Shorten</button>
+</form>
+
+<h2>Recent Links</h2>
+
+<ul class="url-list">
+    {% for entry in data %}
+        <li class="url-item">
+            <span>{{ entry.url }}</span>
+            <a class="short-link" href="/u/{{ entry.slug }}">
+                /u/{{ entry.slug }}
+            </a>
+        </li>
+    {% empty %}
+        <p>No URLs yet. Start shortening!</p>
+    {% endfor %}
+</ul>
+
+</div>
+
+</body>
+</html>
+
